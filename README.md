@@ -472,3 +472,126 @@ flowchart TD
 
     I --> I1[String is a class]
 ```
+
+### Primitive Data Types
+
+| Data Type | Size | Range / Description | Default Value |
+|---|---:|---|---|
+| `byte` | 1 byte (8 bits) | -128 to 127 | `0` |
+| `short` | 2 bytes (16 bits) | -32,768 to 32,767 | `0` |
+| `int` | 4 bytes (32 bits) | -2³¹ to 2³¹ - 1 | `0` |
+| `long` | 8 bytes (64 bits) | -2⁶³ to 2⁶³ - 1 | `0L` |
+| `float` | 4 bytes (32 bits) | Decimal number; add `f` or `F` at the end | `0.0f` |
+| `double` | 8 bytes (64 bits) | Decimal number; default decimal type | `0.0d` |
+| `char` | 2 bytes (16 bits) | Stores one Unicode character | `'\u0000'` |
+| `boolean` | JVM-dependent | Stores only `true` or `false` | `false` |
+| Reference types (`String`, arrays, classes, etc.) | — | Stores an object reference | `null` |
+
+
+### Numeric Literals
+
+#### `long` Literal
+
+A whole number is treated as an `int` by default. If the number is too large for `int`, add `L` or `l` at the end to make it a `long`.
+
+```diff
+- long i = 1234561231311; // Compilation error: number is too large for int
+```
+
+```java
+long i = 1234561231311L; // Valid
+long j = 1234561231311l; // Valid, but uppercase L is recommended
+```
+
+#### Underscore (`_`) in Numbers
+
+Underscores can make large numbers easier to read.
+
+```java
+int population = 1_000_000; // Valid
+double price = 1_250.50_75; // Valid
+```
+
+Underscores cannot be at the beginning or end of a number.
+
+```diff
+- int number = _1000;  // Invalid
+- int number = 1000_;  // Invalid
+```
+
+For decimal numbers, an underscore cannot be immediately before or after the decimal point or at the begining or end of the number.
+
+```diff
+- double price = 1250_.50; // Invalid
+- double price = 1250._50; // Invalid
+```
+
+### Number Systems in Java
+
+Java allows integer literals in decimal, binary, octal, and hexadecimal.
+
+#### 1. Decimal (Base 10)
+
+Decimal is the normal number system. It uses digits from `0` to `9`.
+
+```java
+int num = 25;
+```
+
+```text
+25 = (2 × 10) + 5
+```
+
+#### 2. Binary (Base 2)
+
+Binary uses only `0` and `1`.
+
+Use `0b` or `0B` before the number.
+
+```java
+int num = 0b1101;
+```
+
+```text
+0b1101 = (1 × 8) + (1 × 4) + (0 × 2) + (1 × 1)
+        = 13
+```
+
+#### 3. Octal (Base 8)
+
+Octal uses digits from `0` to `7`.
+
+Use `0` before the number.
+
+```java
+int num = 014;
+```
+
+```text
+014 = (1 × 8) + 4
+    = 12
+```
+
+#### 4. Hexadecimal (Base 16)
+
+Hexadecimal uses digits `0` to `9` and letters `A` to `F`.
+
+Use `0x` or `0X` before the number.
+
+```java
+int num = 0x1A;
+```
+
+```text
+0x1A = (1 × 16) + 10
+     = 26
+```
+
+```java
+int decimal = 13;
+int binary = 0b1101; // 13
+int octal = 015;     // 13
+int hexadecimal = 0xD; // 13
+```
+
+
