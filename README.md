@@ -26,7 +26,7 @@
  - Integration Libaries -> Dtabase connection etc.
 
  ### What is JDK, JRE, JVM
- - JDK -> used to develop java applications. include all the tools to develop and run java application.  Inside JDK it has JRE and development tools too.
+ - JDK -> used to develop java applications. include all the tools to develop and run java application.  Inside JDK it has JRE and inside JRE it has JVM and development tools too.
  - JRE ->bundles libaries and the java virtual machine and other components to run application
 - JVM -> It runs java programs.
 
@@ -34,5 +34,18 @@
 - Java compiler compiles the code into byte code. 
 ``` 
 javac HelloWorld.java -> compiles the code and generate bytecode -> HelloWorld.class which is used by jvm to run.
+
+To Create ByteCode
+    - javac HelloWorld
+    + javac HelloWorld.java
+
+To Run
+    - java HelloWorld.class 
+    + java HelloWorld
+     
+
+New Method Java Launcher
+    - java HelloWorld
+    + java HelloWorld.java (internally creates a temp .class file and run which is faster)
 ```
 
