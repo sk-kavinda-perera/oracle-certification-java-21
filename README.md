@@ -525,73 +525,711 @@ For decimal numbers, an underscore cannot be immediately before or after the dec
 - double price = 1250_.50; // Invalid
 - double price = 1250._50; // Invalid
 ```
+ ### Numbers in Java
 
-### Number Systems in Java
+ #### Decimal (Base 10)
 
-Java allows integer literals in decimal, binary, octal, and hexadecimal.
-
-#### 1. Decimal (Base 10)
-
-Decimal is the normal number system. It uses digits from `0` to `9`.
+Uses digits `0` to `9`. No prefix is needed.
 
 ```java
 int num = 25;
 ```
 
 ```text
-25 = (2 × 10) + 5
+25 = (2 × 10¹) + (5 × 10⁰)
+   = (2 × 10) + (5 × 1)
+   = 20 + 5
+   = 25
 ```
 
-#### 2. Binary (Base 2)
+#### Binary (Base 2)
 
-Binary uses only `0` and `1`.
-
-Use `0b` or `0B` before the number.
+Uses only `0` and `1`. Use prefix `0b` or `0B`.
 
 ```java
 int num = 0b1101;
 ```
 
 ```text
-0b1101 = (1 × 8) + (1 × 4) + (0 × 2) + (1 × 1)
+This is basically 0's and 1's
+0b1101 = (1 × 2³) + (1 × 2²) + (0 × 2¹) + (1 × 2⁰)
+        = (1 × 8) + (1 × 4) + (0 × 2) + (1 × 1)
         = 13
 ```
+```diff
+- int binary = 0b102; // Invalid: binary can use only 0 and 1
+```
+#### Octal (Base 8)
 
-#### 3. Octal (Base 8)
-
-Octal uses digits from `0` to `7`.
-
-Use `0` before the number.
+Uses digits `0` to `7`. Use prefix `0`.
 
 ```java
 int num = 014;
 ```
 
 ```text
-014 = (1 × 8) + 4
+014 = (1 × 8¹) + (4 × 8⁰)
+    = (1 × 8) + (4 × 1)
     = 12
 ```
+```diff
+- int octal = 018; // Invalid: octal can use only digits 0 to 7
+- int octal = 019; // Invalid: octal can use only digits 0 to 7
+```
+#### Hexadecimal (Base 16)
 
-#### 4. Hexadecimal (Base 16)
-
-Hexadecimal uses digits `0` to `9` and letters `A` to `F`.
-
-Use `0x` or `0X` before the number.
+Uses digits `0` to `9` and letters `A` to `F`. Use prefix `0x` or `0X`.
 
 ```java
 int num = 0x1A;
 ```
 
 ```text
-0x1A = (1 × 16) + 10
+0x1A = (1 × 16¹) + (10 × 16⁰)
+     = (1 × 16) + (10 × 1)
      = 26
 ```
 
+```diff
+- int hexadecimal = 0x1G; // Invalid: hexadecimal uses 0-9 and A-F only
+```
+### Converting Numbers to Binary, Octal, and Hexadecimal
+
+The `Integer` class can convert an `int` value into a `String` representation.
+
 ```java
-int decimal = 13;
-int binary = 0b1101; // 13
-int octal = 015;     // 13
-int hexadecimal = 0xD; // 13
+int number = 13;
+
+System.out.println(Integer.toBinaryString(number)); // 1101
+System.out.println(Integer.toOctalString(number));  // 15
+System.out.println(Integer.toHexString(number));    // d
+```
+
+- `Integer.toBinaryString(13)` returns `"1101"`.
+- `Integer.toOctalString(13)` returns `"15"`.
+- `Integer.toHexString(13)` returns `"d"`.
+
+These methods return a `String`, not an `int`.
+
+They do not add prefixes:
+
+```text
+1101  // not 0b1101
+15    // not 015
+d     // not 0xD
+```
+
+### Type Conversion and Casting
+
+Type conversion means changing a value from one data type to another.
+
+#### 1. Automatic Type Conversion (Widening)
+
+When converting from a smaller compatible type to a larger type, Java does it automatically.
+
+```java
+int number = 10;
+double value = number; // int → double
+```
+
+```text
+Small → Large = No cast needed
+```
+
+```text
+byte → short → int → long → float → double
+```
+
+#### 2. Type Casting (Narrowing)
+
+When converting from a larger type to a smaller type, Java gives a compilation error.
+
+```diff
+- int number = 25.7; // Compilation error: double → int
+```
+
+Use an explicit cast:
+
+```java
+double value = 25.7;
+int number = (int) value; // double → int
+```
+
+```text
+Large → Small = Cast needed
+```
+
+```text
+double → float → long → int → short → byte
+```
+
+```text
+25.7 becomes 25 because the decimal part is removed.
+Casting from double to int simply removes everything after the decimal point. It does not round.
 ```
 
 
+### Adding Numbers and Strings
+
+```java
+int a = 10;
+int b = 20;
+int c = a + b;
+
+System.out.println("c = " + (a + b)); // c = 30
+System.out.println("c = " + a + b);     // c = 1020
+String name = "Kavinda";
+int age = 25;
+
+System.out.println(name + " is " + age); // Kavinda is 25
+
+String firstName = "Kavinda";
+String lastName = " Perera";
+
+System.out.println(firstName + lastName); // Kavinda Perera
+```
+
+### Airthmetic Operations
+
+- operatrs are special symbol that perform speicfic operations
+- the value that the operator operates is called operand. 
+    - Addictive operator -> can be used to concatenate two strings together as well.
+    - Subscraction Operator
+    - Multiplication Operator
+    - Division Operator 
+    - Remainder Operator -> returns the remainder of the division as the result
+
+### Arithmetic with `byte`, `short`, and `char`
+
+When Java uses arithmetic operators with `byte`, `short`, or `char`, it converts them to `int` before calculating.
+
+```text
+byte / short / char arithmetic → at least int
+```
+
+This applies to:
+
+```text
++   -   *   /   %
+```
+
+```java
+short a = 5;
+short b = 3;
+```
+
+```diff
+- short add = a + b;       // Invalid: result is int
+- short subtract = a - b;  // Invalid: result is int
+- short multiply = a * b;  // Invalid: result is int
+- short divide = a / b;    // Invalid: result is int
+- short remainder = a % b; // Invalid: result is int
+
++ short add = (short) (a + b);
++ short subtract = (short) (a - b);
++ short multiply = (short) (a * b);
++ short divide = (short) (a / b);
++ short remainder = (short) (a % b);
+```
+
+#### Compile-Time Constant Exception
+
+Java allows a constant `int` expression to be assigned to `byte`, `short`, or `char` if the final value fits in that type.
+- **Reason:** Java calculates constant expressions during compilation. Since the compiler already knows the final value is safe, it allows the assignment without a cast.
+```diff
++ short result1 = 5 / 3; // Valid: result is 1
++ short result2 = 5 + 3; // Valid: result is 8
++ byte result3 = 10 * 2; // Valid: result is 20
+```
+
+With variables, the result is an `int`, so a cast is needed.
+
+```diff
+- short result = a / b; // Invalid
++ short result = (short) (a / b); // Valid
+```
+```java
+char a = 6;
+char b = 2;
+```
+
+```diff
+- char test = a - b; // Invalid: char - char produces an int
++ char test = (char) (a - b); // Valid
+```
+
+#### Other Types
+
+- `int + int` returns `int`.
+- If either value is `long`, the result becomes `long`.
+- If either value is `float`, the result becomes `float`.
+- If either value is `double`, the result becomes `double`.
+- `boolean` cannot be used with arithmetic operators.
+
+```java
+long a = 60;
+long b = 2;
+
+long test = a - b;
+
+System.out.println(test); // 58
+```
+
+The automatic conversion to `int` during arithmetic happens only with:
+
+```text
+byte, short, and char
+```
+
+It does not happen with `long`, `float`, or `double`.
+
+```text
+long - long → long
+float - float → float
+double - double → double
+```
+
+`boolean` cannot be used in arithmetic.
+
+
+### Assignment Operator 
+Assigns the value on the right to the operand on the left
+
+- = -> simple assignment operator
+- += ->add and assign operator (add the right value and left and assign the value to the left)\
+- -= -> substract and assignment operator (substract the right value and left and assing the value to the left)
+- *= -> Multiply and assignment operator
+- /= -> Divide and assignment operator
+- %= -> Modulus and assignment operator
+
+
+### Unary Operator
+
+-  '+' -> Unary plus operator 
+-  '-' -> Unary minus operator
+-  '++' -> Increment operator (increment by 1)
+- '-' -> Decrement Operator (decrement by 1)
+- '!' -> logical complement operator(inverts value of boolean)
+
+### Post-Increment and Pre-Increment
+
+```java
+double result = 4.7;
+
+System.out.println(result++); // 4.7
+System.out.println(result++); // 5.7
+System.out.println(++result); // 6.7
+```
+
+- `result++` prints the current value first, then increases it by `1`.
+
+  ```text
+  Prints 4.7, then result becomes 5.7
+  ```
+
+- `++result` increases the value by `1` first, then prints it.
+
+  ```text
+  result becomes 6.7, then prints 6.7
+  ```
+### Equality and Relational Operator
+
+  -  == -> equal to (check if two values equal if yes condition becomes true)
+  -  != -> Not equals to (if values are not equal condition becomes true)
+  -  '>' -> greater than 
+  -  '<' -> less than
+  -  '>=' -> greater than or equal to
+  - '<=; -> less than or equal to
+
+
+### Conditional Operators
+
+- && - >  conditional AND operator (if both condition true then true. if left is false it will not even evaluate right side)
+-  || -> coNDITION OR operator (the operator will not check the condition on the right side if the left side evaluates to true)
+- ?: Terniary Operator . This consist of three operands which is used to evalaute boolean expressions.(short hand if else statement)
+
+### Bitwise and BitShif Operators
+- & ->Bitwise AND Operator
+- | ->Bitwise inclusive OR operator
+- ^ -> Bitwise Exclusive OR operator
+- ~-> Bitwise Complement Operator
+- << -> Bitwise left shift operator
+- '>>' -> bitwise right sift operator
+
+### Bitwise Operators
+
+```java
+int num1 = 8; // Binary: 1000
+int num2 = 9; // Binary: 1001
+```
+
+- `&` -> Bitwise AND operator  
+  A bit is `1` only when both bits are `1`.
+
+  ```java
+  System.out.println(num1 & num2); // 8
+  ```
+
+  ```text
+  1000
+  1001
+  ----
+  1000 = 8
+  ```
+
+- `|` -> Bitwise inclusive OR operator  
+  A bit is `1` when at least one bit is `1`.
+
+  ```java
+  System.out.println(num1 | num2); // 9
+  ```
+
+  ```text
+  1000
+  1001
+  ----
+  1001 = 9
+  ```
+
+- `^` -> Bitwise exclusive OR (XOR) operator  
+  A bit is `1` when the bits are different.
+
+  ```java
+  System.out.println(num1 ^ num2); // 1
+  ```
+
+  ```text
+  1000
+  1001
+  ----
+  0001 = 1
+  ```
+
+- `~` -> Bitwise complement operator  
+  Changes every `0` bit to `1` and every `1` bit to `0`.
+
+  ```java
+  System.out.println(~num1); // -9
+  ```
+
+- `<<` -> Bitwise left shift operator  
+  Moves bits left. Each one-position shift usually multiplies by `2`.
+
+  ```java
+  System.out.println(num1 << 1); // 16
+  ```
+
+  ```text
+  1000 → 10000 = 16
+  ```
+
+- `>>` -> Bitwise right shift operator  
+  Moves bits right. Each one-position shift usually divides by `2`.
+
+  ```java
+  System.out.println(num1 >> 1); // 4
+  ```
+
+  ```text
+  1000 → 0100 = 4
+  ```
+
+  ```java
+int num1 = 8; // Binary: 1000
+
+- System.out.println(num1 << 5); // 256
+- System.out.println(num1 >> 5); // 0
+```
+
+```text
+1000 << 5 → 100000000 = 256
+1000 >> 5 → 0
+```
+
+### `Integer.toBinaryString()` and `Integer.toString()`
+
+Both methods return a `String`.
+
+```java
+int number = 13;
+```
+
+#### `Integer.toBinaryString()`
+
+Converts an `int` value into a binary `String`.
+
+```java
+String binary = Integer.toBinaryString(number);
+
+System.out.println(binary); // 1101
+```
+
+```text
+13 → "1101"
+```
+
+It does not include the `0b` prefix.
+
+#### `Integer.toString()`
+
+Converts an `int` value into a normal decimal `String`.
+
+```java
+String text = Integer.toString(number);
+
+System.out.println(text); // 13
+```
+
+```text
+13 → "13"
+```
+
+```java
+int number = 13;
+
+System.out.println(Integer.toBinaryString(number)); // 1101
+System.out.println(Integer.toString(number));       // 13
+int number = Integer.parseInt(binary, 2); -> you can give binary value and the base and it will print the decimal. 2  -> Binary. if use 8-> octale and 16->hexa
+int binaryDigits = Integer.parseInt(Integer.toBinaryString(number));     //you can do this if requried give binary string and then conver the string into int.
+```
+
+#### Remember: Unary Bitwise Complement `~`
+
+An `int` has 32 bits. Java reverses all 32 bits when using `~`.
+
+```text
+8 = 00000000 00000000 00000000 00001000
+
+~8 = 11111111 11111111 11111111 11110111
+```
+
+The first bit is `1`, so Java treats the result as a negative number.
+
+```java
+System.out.println(~8); // -9
+```
+
+Easy rule to remember:
+
+```text
+~n = -(n + 1)
+```
+
+```text
+~8 = -(8 + 1) = -9
+```
+
+```java
+System.out.println(Integer.toBinaryString(8));
+System.out.println(Integer.toBinaryString(~8));
+System.out.println(~8);
+```
+
+```text
+1000
+11111111111111111111111111110111
+-9
+```
+
+
+### `char` Data Type
+- `char` stores one character and uses single quotes.
+
+  ```java
+  char letter = 'A';
+  char digit = '5';
+  char symbol = '@';
+  ```
+
+- Each `char` has an integer value from `0` to `65,535`.
+
+  ```java
+  char c3 = 65;
+
+  System.out.println(c3); // A
+  ```
+  A `char` can store only one character. 
+
+```diff
++ char c = '5';  // Valid: one character
+- char c = '52'; // Invalid: two characters
+```
+
+#### Checking Letters and Digits
+
+```java
+char c1 = 'A';
+char c2 = '5';
+
+System.out.println(Character.isLetter(c1)); // true
+System.out.println(Character.isLetter(c2)); // false
+
+System.out.println(Character.isDigit(c2)); // true
+```
+
+```diff
++ char c2 = 5; // Valid: character with numeric value 5
++ char c2 = '5'; // Valid: the character '5'
+```
+
+#### `char` Arithmetic
+
+```java
+char letter1 = 67; // C
+
+int num = letter1 + 3;
+
+char letter2 = (char) num;
+
+int num = letter1 + 3;
+char + int → int
+```
+
+```diff
+- char letter2 = num; // Invalid: num is an int
++ char letter2 = (char) num; // Valid
+```
+
+- System.out.println(letter1); // C
+- System.out.println(num);     // 70
+- System.out.println(letter2); // F
+
+The cast is needed because Java does not automatically convert an `int` to `char`.
+
+### Operator Precedence
+
+| Precedence | Operators |
+|---|---|
+| Parentheses | `()` |
+| Unary | `++`, `--`, `+`, `-`, `!`, `~` |
+| Multiplicative | `*`, `/`, `%` |
+| Additive | `+`, `-` |
+| Shift | `<<`, `>>`, `>>>` |
+| Relational | `<`, `>`, `<=`, `>=`, `instanceof` |
+| Equality | `==`, `!=` |
+| Bitwise AND | `&` |
+| Bitwise XOR | `^` |
+| Bitwise OR | `|` |
+| Conditional AND | `&&` |
+| Conditional OR | `||` |
+| Ternary | `?:` |
+| Assignment | `=`, `+=`, `-=`, `*=`, `/=`, `%=` |
+
+
+You can change the order by having () -> brackets have the highest precedence.
+
+```java
+int x = 8;
+int y = 4;
+int z = 2;
+int sum = 0;
+
+sum = x + y-- + --z + y;
+```
+
+```text
+y-- → uses 4, then y becomes 3
+--z → z becomes 1, then uses 1
+
+sum = 8 + 4 + 1 + 3
+sum = 16
+
+y = 3
+z = 1
+```
+
+### Expression and Block
+
+An **expression** is code that produces a value.
+
+```java
+290
+maxSpeed
+maxSpeed + 10
+Math.max(5, 10)
+```
+
+```java
+int maxSpeed = 290;
+```
+
+This is a variable declaration statement. `290` is an expression.
+
+A **compound expression** has more than one part or operator.
+
+```java
+int result = a + b * 2;
+```
+
+A **block** is code inside curly braces `{ }`.
+
+```java
+{
+    int age = 25;
+    System.out.println(age);
+}
+```
+
+```java
+System.out.println(11 / 2);   // 5
+System.out.println(11 / 2.0); // 5.5
+
+System.out.println(11 % 2);   // 1
+System.out.println(11 % 2.0); // 1.0
+```
+
+```text
+11 / 2   → Both are int values, so the decimal part is removed.
+11 / 2.0 → 2.0 is double, so the result is decimal.
+
+11 % 2   → Remainder is 1.
+11 % 2.0 → Remainder is 1.0 because 2.0 is double.
+```
+
+```java
+int x = 5; // Binary: 0101
+int y = 2; // Binary: 0010
+
+System.out.println(x & y); // 0
+```
+
+```text
+0101
+0010
+----
+0000 = 0
+```
+
+## ARRAY
+
+- An array is a lsit of elements of same type.
+- You can define an array as:
+
+  ```java
+  dataType[] arrayName;
+  ```
+
+  **OR**
+
+  ```java
+  dataType arrayName[];
+  ```
+
+- You can instantiatate an array as
+    ```
+        arrayName = new DataType[]; 
+    ```
+
+- Intialization
+    ```
+        arrayName = new DataType[5];
+    ```
+Each item in an array is called eleement and elements are accessed by the numeric index which starts from 0
+
+- you can intialzie an array during declaration or later on the prgroam
+    ```
+    int [] num = {5,1,4,7,2};
+
+     
+    
+    ```
