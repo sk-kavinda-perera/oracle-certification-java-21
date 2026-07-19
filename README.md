@@ -1224,12 +1224,5 @@ System.out.println(x & y); // 0
     ```
         arrayName = new DataType[5];
     ```
-Each item in an array is called eleement and elements are accessed by the numeric index which starts from 0
-
-- you can intialzie an array during declaration or later on the prgroam
-    ```
-    int [] num = {5,1,4,7,2};
-
-     
-    
-    ```
+Each item in an array is called eleement and elements are accessed by the numeric index which starts from
+ 
